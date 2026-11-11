@@ -2,18 +2,28 @@ package dk.easv.mrs.GUI.Controller;
 
 import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.GUI.Model.MovieModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import org.w3c.dom.Text;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
-
-    public TextField txtMovieSearch;
-    public ListView<Movie> lstMovies;
+    @FXML
+    private TextField txtMovieCreateTitle, txtMovieCreateYear, txtMovieSearch;
+    @FXML
+    private ListView<Movie> lstMovies;
+    @FXML
+    private Button btnCreate;
     private MovieModel movieModel;
 
     public MovieViewController()  {
@@ -49,5 +59,15 @@ public class MovieViewController implements Initializable {
         alert.setTitle("Something went wrong");
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
+    }
+    @FXML
+    public void handleClick(ActionEvent actionEvent) throws Exception {
+        String mTitle = txtMovieCreateTitle.getText();
+        int mYear = Integer.parseInt(txtMovieCreateYear.getText());
+        try{
+            movieModel.createMovie(new Movie(-1, mYear, mTitle));
+        } catch (Exception e) {
+            displayError(e);
+        }
     }
 }

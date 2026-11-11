@@ -3,6 +3,8 @@ import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.Collections;
 import java.util.List;
 
 public class MovieModel {
@@ -27,5 +29,10 @@ public class MovieModel {
         List<Movie> searchResults = movieManager.searchMovies(query);
         moviesToBeViewed.clear();
         moviesToBeViewed.addAll(searchResults);
+    }
+
+    public void createMovie (Movie m) throws Exception {
+        Movie createdMovie = movieManager.createMovie(m);
+        moviesToBeViewed.add(createdMovie);
     }
 }
