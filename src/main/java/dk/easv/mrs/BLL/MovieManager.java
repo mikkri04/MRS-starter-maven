@@ -28,4 +28,12 @@ public class MovieManager {
     public Movie createMovie(Movie m) throws Exception {
        return (movieDAO.createMovie(m));
     }
+
+    public void updateMovie(Movie updatedMovie) throws Exception {
+        movieDAO.updateMovie(updatedMovie);
+    }
+
+    public void deleteMovie(Movie movieToBeDeleted) throws Exception{
+        movieDAO.deleteMovie(movieToBeDeleted);
+    }
 }

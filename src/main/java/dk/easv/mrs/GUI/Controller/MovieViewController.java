@@ -51,6 +51,11 @@ public class MovieViewController implements Initializable {
             }
         });
 
+        lstMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            txtMovieCreateTitle.setText(newValue.getTitle());
+            txtMovieCreateYear.setText(newValue.getYear() + "");
+        });
+
     }
 
     private void displayError(Throwable t)
@@ -61,7 +66,7 @@ public class MovieViewController implements Initializable {
         alert.showAndWait();
     }
     @FXML
-    public void handleClick(ActionEvent actionEvent) throws Exception {
+    public void handleAddClick(ActionEvent actionEvent) throws Exception {
         String mTitle = txtMovieCreateTitle.getText();
         int mYear = Integer.parseInt(txtMovieCreateYear.getText());
         try{
@@ -70,4 +75,39 @@ public class MovieViewController implements Initializable {
             displayError(e);
         }
     }
-}
+    @FXML
+    public void handleUPDClick() throws Exception {
+        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie != null) {
+            String title = txtMovieCreateTitle.getText();
+            int year = Integer.parseInt(txtMovieCreateYear.getText());
+
+            selectedMovie.setTitle(title);
+            selectedMovie.setYear(year);
+            try {
+                movieModel.updateMovie(selectedMovie);
+            } catch (Exception e) {
+                displayError(e);
+            }
+        }
+
+    }
+    @FXML
+    public void handleDELClick() throws Exception {
+        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie != null) {
+            try {
+                movieModel.deleteMovie(selectedMovie);
+            } catch (Exception e){
+                displayError(e);
+            }
+        }
+
+    }
+
+
+
+
+    }
